@@ -1,6 +1,8 @@
 # description
 bash and zsh completion for namada cli
 
+https://github.com/anoma/namada
+
 # features
 parse namada cli output to auto generate the completion (if the namada cli evolves, the completion will auto update itself)
 
