@@ -11,14 +11,14 @@ for bash
 
     wget https://raw.githubusercontent.com/thibault-ketterer/namada-completion/main/autocomplete-namada.bash
 	mv autocomplete-namada.bash ~/
-	echo "source autocomplete-namada.bash" >> ~/.bashrc
+	echo "source ~/autocomplete-namada.bash" >> ~/.bashrc
 
 
 for zsh
 
     wget https://raw.githubusercontent.com/thibault-ketterer/namada-completion/main/autocomplete-namada.zsh
 	mv autocomplete-namada.zsh ~/
-	echo "source autocomplete-namada.zsh" >> ~/.zshrc
+	echo "source ~/autocomplete-namada.zsh" >> ~/.zshrc
 
 # demo
 
