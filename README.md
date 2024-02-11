@@ -16,7 +16,7 @@ for bash
 for zsh
 
 	cp autocomplete-namada.zsh ~/
-	echo "source autocomplete-namada.zsh" >> ~/.zhrc
+	echo "source autocomplete-namada.zsh" >> ~/.zshrc
 
 # demo
 
