@@ -9,13 +9,15 @@ parse namada cli output to auto generate the completion (if the namada cli evolv
 # install and use
 for bash
 
-	cp autocomplete-namada.bash ~/
+    wget https://raw.githubusercontent.com/thibault-ketterer/namada-completion/main/autocomplete-namada.bash
+	mv autocomplete-namada.bash ~/
 	echo "source autocomplete-namada.bash" >> ~/.bashrc
 
 
 for zsh
 
-	cp autocomplete-namada.zsh ~/
+    wget https://raw.githubusercontent.com/thibault-ketterer/namada-completion/main/autocomplete-namada.zsh
+	mv autocomplete-namada.zsh ~/
 	echo "source autocomplete-namada.zsh" >> ~/.zshrc
 
 # demo
