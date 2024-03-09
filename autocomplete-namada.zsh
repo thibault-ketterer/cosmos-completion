@@ -39,5 +39,14 @@ _generate_namada_completions() {
     return ret
 }
 
-compdef _generate_namada_completions namada
+names=(
+  namada
+  namadaw
+  namadan
+  namadac
+)
+
+for i in "${names[@]}"; do
+    compdef _generate_namada_completions "$i"
+done
 
