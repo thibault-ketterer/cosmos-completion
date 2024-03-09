@@ -1,7 +1,9 @@
-_generate_namada_completions() {
-    local cur prev opts
+
+_generate_cosmos_completions() {
+    local cur prev opts program
     cur="${COMP_WORDS[COMP_CWORD]}"
     prev="${COMP_WORDS[COMP_CWORD-1]}"
+    program="${COMP_WORDS[0]}" # Use the program name dynamically
 
     # Identify the command or sub-command being used
     local command=""
@@ -17,30 +19,36 @@ _generate_namada_completions() {
         fi
     done
 
-     # Fetch and parse options based on the current context
+    # Fetch and parse options based on the current context
     if [[ -n "$subcommand" ]]; then
-        # For sub-commands, parse their specific options
-        # opts=$(namada $command $subcommand --help 2>/dev/null | grep -oE '\-\-[a-zA-Z0-9\-]+' | sort -u)
-        opts="$(namada $command $subcommand --help 2>/dev/null | awk '/Commands:/,/^$/ {if (!/:/ && !/^$/ && $1) print $1}')"
-        opts+=" $(namada $command $subcommand --help 2>/dev/null | grep -oE '\-\-[a-zA-Z0-9\-]+' | sort -u)"
+        opts="$("${program}" $command $subcommand --help 2>/dev/null | awk '/Commands:/,/^$/ {if (!/:/ && !/^$/ && $1) print $1}')"
+        opts+=" $("${program}" $command $subcommand --help 2>/dev/null | grep -oE '\-\-[a-zA-Z0-9\-]+' | sort -u)"
     elif [[ -n "$command" ]]; then
-        # For main commands without a sub-command, parse the main command's options
-        # opts=$(namada $command --help 2>/dev/null | grep -oE '\-\-[a-zA-Z0-9\-]+' | sort -u)
-        opts="$(namada $command --help 2>/dev/null | awk '/Commands:/,/^$/ {if (!/:/ && !/^$/ && $1) print $1}')"
-        opts+=" $(namada $command --help 2>/dev/null | grep -oE '\-\-[a-zA-Z0-9\-]+' | sort -u)"
+        opts="$("${program}" $command --help 2>/dev/null | awk '/Commands:/,/^$/ {if (!/:/ && !/^$/ && $1) print $1}')"
+        opts+=" $("${program}" $command --help 2>/dev/null | grep -oE '\-\-[a-zA-Z0-9\-]+' | sort -u)"
     else
-        # For the base command, parse both global options and sub-commands
-        opts="$(namada --help 2>/dev/null | awk '/Commands:/,/^$/ {if (!/:/ && !/^$/ && $1) print $1}')"
-        opts+=" $(namada --help 2>/dev/null | grep -oE '\-\-[a-zA-Z0-9\-]+' | sort -u)"
+        opts="$("${program}" --help 2>/dev/null | awk '/Commands:/,/^$/ {if (!/:/ && !/^$/ && $1) print $1}')"
+        opts+=" $("${program}" --help 2>/dev/null | grep -oE '\-\-[a-zA-Z0-9\-]+' | sort -u)"
     fi
+
+     # Remove duplicate options
+    opts=$(echo "$opts" | tr ' ' '\n' | awk '!seen[$0]++' | tr '\n' ' ')
 
     # Complete based on the current word
-    if [[ "$cur" == --* ]]; then
-        COMPREPLY=($(compgen -W "${opts}" -- "${cur}"))
-    else
-        COMPREPLY=($(compgen -W "${opts}" -- "${cur}"))
-    fi
+    COMPREPLY=($(compgen -W "${opts}" -- "${cur}"))
 }
 
-complete -F _generate_namada_completions namada
+names=(
+  namada
+  namadaw
+  namadan
+  namadac
+  entagled
+  osmosisd
+  lavad
+)
 
+for i in "${names[@]}"; do
+	complete -F _generate_cosmos_completions "$i"
+
+done
