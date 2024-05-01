@@ -8,19 +8,27 @@ _generate_cosmos_completions() {
     # Identify the command or sub-command being used
     local command=""
     local subcommand=""
+    local subsubcommand=""
     for ((i=1; i < COMP_CWORD; i++)); do
         if [[ "${COMP_WORDS[i]}" != -* ]]; then
             if [[ -z "$command" ]]; then
                 command="${COMP_WORDS[i]}"
             else
-                subcommand="${COMP_WORDS[i]}"
-                break
+                if [[ -z "$subcommand" ]];then
+                    subcommand="${COMP_WORDS[i]}"
+                else
+                    subsubcommand="${COMP_WORDS[i]}"
+                    break
+                fi
             fi
         fi
     done
 
     # Fetch and parse options based on the current context
-    if [[ -n "$subcommand" ]]; then
+    if [[ -n "$subsubcommand" ]]; then
+        opts="$("${program}" $command $subcommand $subsubcommand --help 2>/dev/null | awk '/Commands:/,/^$/ {if (!/:/ && !/^$/ && $1) print $1}')"
+        opts+=" $("${program}" $command $subcommand $subsubcommand --help 2>/dev/null | grep -oE '\-\-[a-zA-Z0-9\-]+' | sort -u)"
+    elif [[ -n "$subcommand" ]]; then
         opts="$("${program}" $command $subcommand --help 2>/dev/null | awk '/Commands:/,/^$/ {if (!/:/ && !/^$/ && $1) print $1}')"
         opts+=" $("${program}" $command $subcommand --help 2>/dev/null | grep -oE '\-\-[a-zA-Z0-9\-]+' | sort -u)"
     elif [[ -n "$command" ]]; then
@@ -46,6 +54,7 @@ names=(
   entagled
   osmosisd
   lavad
+  sided
 )
 
 for i in "${names[@]}"; do
