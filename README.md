@@ -1,25 +1,30 @@
 # description
-bash and zsh completion for namada cli
+bash and zsh completion for cosmos like cli (with a genereic approach)
 
-https://github.com/anoma/namada
+tested on:
+
+- namada: https://github.com/anoma/namada
+- sided: https://side.one/
+- osmosisd
+- lavad
 
 # features
-parse namada cli output to auto generate the completion (if the namada cli evolves, the completion will auto update itself)
+parse the cli output to auto generate the completion (if the cli evolves, the completion will auto update itself)
 
 # install and use
 for bash
 
-    wget https://raw.githubusercontent.com/thibault-ketterer/namada-completion/main/autocomplete-namada.bash
-	mv autocomplete-namada.bash ~/
-	echo "source ~/autocomplete-namada.bash" >> ~/.bashrc
+    wget https://raw.githubusercontent.com/thibault-ketterer/cosmos-completion/main/autocomplete-cosmos.bash
+	mv autocomplete-cosmos.bash ~/
+	echo "source ~/autocomplete-cosmos.bash" >> ~/.bashrc
 
 
 for zsh
 
-    wget https://raw.githubusercontent.com/thibault-ketterer/namada-completion/main/autocomplete-namada.zsh
-	mv autocomplete-namada.zsh ~/
-	echo "source ~/autocomplete-namada.zsh" >> ~/.zshrc
+    wget https://raw.githubusercontent.com/thibault-ketterer/cosmos-completion/main/autocomplete-cosmos.zsh
+	mv autocomplete-cosmos.zsh ~/
+	echo "source ~/autocomplete-cosmos.zsh" >> ~/.zshrc
 
-# demo
+# demo with namada
 
 ![Demo asciinema namada completion](demo.gif "demo asciinema namada completion")
